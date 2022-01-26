@@ -6,6 +6,9 @@ class Vector2{
 
     normalize()
     {
+        /*
+        *Devuelve un vector con misma orientacion pero magnitud == 1
+        */
         let magnitude = Math.sqrt(this.x * this.x + this.y * this.y)
         this.x /= magnitude
         this.y /= magnitude
@@ -29,6 +32,11 @@ class Ball{
     }
     
     move(){
+        /*
+        *desplaza la bola sumando moveDir a position
+        *si esto se sale de la pantalla invierte el vector de direccion
+        *x o y correspondiente
+        */
         let hit = [false, false];
         let desiredPosition = sumVectors(this.position, this.moveDir)
         let xCondition = desiredPosition.x >= this.size/2 && desiredPosition.x <= screenSize.x - this.size/2
@@ -64,28 +72,18 @@ class Ball{
         this.updateDisplay()
     }
     updateDisplay(){
+        /*
+        *Actualiza la posicion del div
+        */
         this.element.style.left = this.position.x - this.size/2 + "px";
         this.element.style.top = this.position.y - this.size/2 +"px";
-
-        // this.element.style.backgroundColor = this.color
-    }
-
-    generateNewColor()
-    {
-
-        let colorOptions = [6,8,"A","C","E"]
-        let newColor = "#"
-
-        for (let i = 0; i < 3; i ++)
-        {
-            newColor += colorOptions[Math.floor(Math.random() * colorOptions.length)]
-        }
-
-        return newColor;
     }
 
     generateNewDirection()
     {
+        /*
+        *Genera una nueva direccion aleatoria
+        */
         this.moveDir = new Vector2(
             [1,-1][Math.floor(Math.random() *2)],
             [1,-1][Math.floor(Math.random() *2)]
