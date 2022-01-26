@@ -1,18 +1,59 @@
+*{
+    margin:0;
+    border:0;
+    padding:0;
+    font-family:"Comfortaa", cursive;
+}
+
+nav{
+    display:flex;
+    justify-content: left;
+    align-items: center;
+    padding:50px 100px 50px 100px;
+    padding-left: 100px;
+    box-shadow:0px 5px 5px 5px rgb(0,0,0,.3);
+    gap:10px;
+}
+
+.nav--logo{
+    width:40px;
+}
+
+.nav--title{
+    font-size:20px;
+    letter-spacing: .5px;
+
+}
+
+main{
+    position:relative;
+}
+
+.tv{
+    top:39px;
+    position:absolute;
+    width:800px;
+    left:50%;
+    transform: translateX(-48.5%);
+}
+
 .screen{
     position:relative;
     background-color:black;
-    width:800px;
-    height:600px;
+    width:500px;
+    height:380px;
     margin:auto;
     padding:0;
     border:0;
+    border-radius:10px;
+    top:150px;  
 }
 
 #ball{
     position:absolute;
     background-color: white;
-    width:100px;
-    height:100px;
+    width:80px;
+    height:80px;
     margin:0;
     border:0;
     padding:0;
@@ -24,6 +65,23 @@
     left:50%;
     top:50%;
     transform:translate(-50%, -50%);
-    font-size:2em;
+    font-size:180%;
     font-weight: bold;
+    text-decoration: underline;
+}
+
+
+footer{
+    position:fixed;
+    width:100%;
+    background-color:lightgrey;
+    bottom:0;
+    padding:10px 0px 10px 0px;
+    display:flex;
+    justify-content: center;
+}
+
+footer > a{
+    color:black;
+    text-decoration: none;
 }

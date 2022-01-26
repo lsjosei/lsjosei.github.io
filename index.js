@@ -87,7 +87,7 @@ class Ball{
 }
 
 
-const screenSize = new Vector2(800, 600)
+const screenSize = new Vector2(500, 380)
 
 let position = new Vector2(
     100 + Math.floor((screenSize.x - 200) * Math.random()),
@@ -102,7 +102,7 @@ direction.normalize()
 ball = new Ball(
     position,
     direction,
-    100,
+    80,
     document.getElementById("ball"))
 
 
