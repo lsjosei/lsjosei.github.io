@@ -23,7 +23,7 @@ class Ball{
         this.moveDir
         this.generateNewDirection()
         this.size = size
-        this.color = "#FFF"
+        this.color = 0
         this.element = element
         this.updateDisplay()
     }
@@ -55,13 +55,10 @@ class Ball{
      
         }
 
-        if (hit[0] && hit[1])
+        if (hit[0] || hit[1])
         {
-            this.color = "#FFF"
-        }
-        else if (hit[0] || hit[1])
-        {
-            dvdElement.style.filter ="hue-rotate("+(225-Math.floor(Math.random()*90))+"deg)"
+            this.color += 180 -Math.floor(Math.random()*90);
+            dvdElement.style.filter ="hue-rotate("+this.color+"deg)"
         }
 
         this.updateDisplay()
