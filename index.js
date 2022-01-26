@@ -61,7 +61,7 @@ class Ball{
         }
         else if (hit[0] || hit[1])
         {
-            this.color = this.generateNewColor();
+            dvdElement.style.filter ="hue-rotate("+(225-Math.floor(Math.random()*90))+"deg)"
         }
 
         this.updateDisplay()
@@ -69,7 +69,8 @@ class Ball{
     updateDisplay(){
         this.element.style.left = this.position.x - this.size/2 + "px";
         this.element.style.top = this.position.y - this.size/2 +"px";
-        this.element.style.backgroundColor = this.color
+
+        // this.element.style.backgroundColor = this.color
     }
 
     generateNewColor()
@@ -97,6 +98,7 @@ class Ball{
 
 const screenSize = new Vector2(500, 380)
 const ballElement = document.getElementById("ball")
+const dvdElement = document.getElementById("dvd")
 
 let position = new Vector2(
     100 + Math.floor((screenSize.x - 200) * Math.random()),

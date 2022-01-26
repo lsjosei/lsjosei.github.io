@@ -75,6 +75,15 @@ main{
     text-decoration: underline;
 }
 
+.dvd--logo{
+    position:absolute;
+    width:80px;
+    left:50%;
+    top:50%;
+    transform:translate(-50%, -50%);
+    filter:hue-rotate(0deg);
+}
+
 
 footer{
     position:fixed;
