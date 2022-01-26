@@ -18,9 +18,10 @@ function sumVectors(v1, v2)
 }
 
 class Ball{
-    constructor(position, moveDir, size, element){
+    constructor(position, size, element){
         this.position = position
-        this.moveDir = moveDir
+        this.moveDir
+        this.generateNewDirection()
         this.size = size
         this.color = "#FFF"
         this.element = element
@@ -84,27 +85,28 @@ class Ball{
 
         return newColor;
     }
+
+    generateNewDirection()
+    {
+        this.moveDir = new Vector2(
+            [1,-1][Math.floor(Math.random() *2)],
+            [1,-1][Math.floor(Math.random() *2)]
+        )
+    }
 }
 
-
 const screenSize = new Vector2(500, 380)
+const ballElement = document.getElementById("ball")
 
 let position = new Vector2(
     100 + Math.floor((screenSize.x - 200) * Math.random()),
     100 + Math.floor((screenSize.y - 200) * Math.random()))
-let direction = new Vector2(
-    [1,-1][Math.floor(Math.random() *2)],
-    [1,-1][Math.floor(Math.random() *2)]
-)
-direction.normalize()
 
 
-ball = new Ball(
+const ball = new Ball(
     position,
-    direction,
     80,
-    document.getElementById("ball"))
-
+    ballElement)
 
 ball.updateDisplay()
 
