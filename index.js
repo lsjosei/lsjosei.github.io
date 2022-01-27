@@ -21,10 +21,10 @@ function sumVectors(v1, v2)
 }
 
 class Ball{
-    constructor(position, size, element){
-        this.position = position
+    constructor(size, element){
+        this.position
         this.moveDir
-        this.generateNewDirection()
+        this.initializePositionAndDirection()
         this.dimensions = size
         this.color = 0
         this.element = element
@@ -32,7 +32,7 @@ class Ball{
 
         this.hasHitCorner = true
         this.flashCounter = 0
-        this.flashConterReset = 20
+        this.flashCounterReset = 20
     }
     
     move(){
@@ -75,7 +75,6 @@ class Ball{
             this.flashCounter = this.flashCounterReset
             hitsCorner += 1
             hitsTotal += 1
-            dvdElement.style.filter = "brightness(0) invert(1)"
         }
         else if (hit[0] || hit[1])
         {
@@ -103,27 +102,47 @@ class Ball{
             if (this.flashCounter < 1)
             {
                 this.color += (90 + Math.floor(Math.random()*180)) * [-1,1][Math.floor(Math.random() * 2)];
-                dvdElement.style.filter ="hue-rotate("+this.color+"deg) saturate(1)"
-                this.flashCounter = this.flashConterReset
+                this.flashCounter = this.flashCounterReset
 
             }
         }
-        else{
 
-            dvdElement.style.filter ="hue-rotate("+this.color+"deg)"
-
-        }
+        dvdElement.style.filter ="hue-rotate("+this.color+"deg)"
     }
 
-    generateNewDirection()
+    initializePositionAndDirection()
     {
+
         /*
-        *Genera una nueva direccion aleatoria
+        *Genero una posicion+direction simulando haber chocado con una esquina para asegurar
+        *que la trayectoria incluye  mas esquinas
         */
-        this.moveDir = new Vector2(
-            [1,-1][Math.floor(Math.random() *2)],
-            [1,-1][Math.floor(Math.random() *2)]
-        )
+        let x = 100 + Math.floor(Math.random() * (screenSize.x - 200))
+        let y
+        let r = Math.random();
+
+        if (x < screenSize.x / 2 && r < .5)
+        {
+            y = x 
+            this.moveDir = new Vector2(1,1)
+        }
+        else if (x < screenSize.x / 2)
+        {
+            y = screenSize.y - x
+            this.moveDir = new Vector2(1,-1)
+        }
+        else if (r < .5)
+        {
+            y = screenSize.x - x
+            this.moveDir = new Vector2(-1,1)
+        }
+        else
+        {
+            y = screenSize.y - (screenSize.x - x)
+            this.moveDir = new Vector2(-1,-1)
+        }
+
+        this.position = new Vector2(x,y)
     }
 }
 
@@ -153,18 +172,24 @@ toggleStatsElement.addEventListener("click", ()=>{
     }
 })
 
+
 let hitsTotal = 0
 let hitsCorner = 0
 
-let position = new Vector2(
-    100 + Math.floor((screenSize.x - 200) * Math.random()),
-    100 + Math.floor((screenSize.y - 200) * Math.random()))
-
 
 const ball = new Ball(
-    position,
     new Vector2(80,40),
     ballElement)
+
+
+for (let i = 0; i < Math.floor(2000+100000*Math.random()); i++)
+{
+    ball.move()
+}
+
+hitsTotal = 0
+hitsCorner = 0
+
 
 ball.updateDisplay()
 
