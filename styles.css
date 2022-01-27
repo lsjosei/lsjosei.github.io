@@ -29,6 +29,25 @@ main{
     position:relative;
 }
 
+.button--stats
+{
+    position:absolute;
+    top:50px;
+    left:50px;
+    width:50px;
+    height:50px;
+    border-radius: 50%;
+}
+
+.stats{
+    position: absolute;
+    display:none;
+    left:50px;
+    top:120px;
+
+}
+
+
 .tv{
     top:39px;
     position:absolute;

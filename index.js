@@ -25,7 +25,7 @@ class Ball{
         this.position = position
         this.moveDir
         this.generateNewDirection()
-        this.size = size
+        this.dimensions = size
         this.color = 0
         this.element = element
         this.updateDisplay()
@@ -39,8 +39,8 @@ class Ball{
         */
         let hit = [false, false];
         let desiredPosition = sumVectors(this.position, this.moveDir)
-        let xCondition = desiredPosition.x >= this.size/2 && desiredPosition.x <= screenSize.x - this.size/2
-        let yCondition  = desiredPosition.y >= this.size/2 && desiredPosition.y <= screenSize.y - this.size/2
+        let xCondition = desiredPosition.x >= this.dimensions.x/2 && desiredPosition.x <= screenSize.x - this.dimensions.x/2
+        let yCondition  = desiredPosition.y >= this.dimensions.y/2 && desiredPosition.y <= screenSize.y - this.dimensions.y/2
         if (xCondition)
         {
             this.position.x = desiredPosition.x;
@@ -63,10 +63,18 @@ class Ball{
      
         }
 
+
         if (hit[0] || hit[1])
         {
+            hitsTotal += 1
             this.color += 180 -Math.floor(Math.random()*90);
             dvdElement.style.filter ="hue-rotate("+this.color+"deg)"
+            hitsTotalElement.innerHTML = hitsTotal;
+        }
+        if (hit[0] && hit[1])
+        {
+            hitsCorner += 1
+            hitsCornerElement.innerHTML = hitsCorner;
         }
 
         this.updateDisplay()
@@ -75,8 +83,8 @@ class Ball{
         /*
         *Actualiza la posicion del div
         */
-        this.element.style.left = this.position.x - this.size/2 + "px";
-        this.element.style.top = this.position.y - this.size/2 +"px";
+        this.element.style.left = this.position.x - this.dimensions.x / 2 + "px";
+        this.element.style.top = this.position.y - this.dimensions.y +"px";
     }
 
     generateNewDirection()
@@ -95,6 +103,35 @@ const screenSize = new Vector2(500, 380)
 const ballElement = document.getElementById("ball")
 const dvdElement = document.getElementById("dvd")
 
+const hitsTotalElement = document.getElementById("hits--total")
+const hitsCornerElement = document.getElementById("hits--corner")
+
+const toggleStatsElement = document.getElementById("button--stats")
+const statsElement = document.getElementById("stats")
+
+toggleStatsElement.addEventListener("click", ()=>{
+    let state = toggleStatsElement.innerHTML
+    console.log(state)
+    if (state == "Hide Stats")
+    {
+        console.log("hiding")
+        statsElement.style.display = "none"
+        toggleStatsElement.innerHTML = "Show Stats"
+
+    }
+    else if ( state == "Show Stats")
+    {
+        console.log("showing")
+        statsElement.style.display = "block"
+        toggleStatsElement.innerHTML = "Hide Stats"
+
+    }
+    console.log("hey")
+})
+
+let hitsTotal = 0
+let hitsCorner = 0
+
 let position = new Vector2(
     100 + Math.floor((screenSize.x - 200) * Math.random()),
     100 + Math.floor((screenSize.y - 200) * Math.random()))
@@ -102,7 +139,7 @@ let position = new Vector2(
 
 const ball = new Ball(
     position,
-    80,
+    new Vector2(80,40),
     ballElement)
 
 ball.updateDisplay()
