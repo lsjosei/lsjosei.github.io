@@ -86,7 +86,7 @@ main{
     left:50%;
     top:50%;
     transform:translate(-50%, -50%);
-    filter:hue-rotate(0deg);
+    filter:brightness(0) invert(1);
 }
 
 

@@ -29,6 +29,10 @@ class Ball{
         this.color = 0
         this.element = element
         this.updateDisplay()
+
+        this.hasHitCorner = true
+        this.flashCounter = 0
+        this.flashConterReset = 20
     }
     
     move(){
@@ -64,17 +68,20 @@ class Ball{
         }
 
 
-        if (hit[0] || hit[1])
-        {
-            hitsTotal += 1
-            this.color += 180 -Math.floor(Math.random()*90);
-            dvdElement.style.filter ="hue-rotate("+this.color+"deg)"
-            hitsTotalElement.innerHTML = hitsTotal;
-        }
         if (hit[0] && hit[1])
         {
+
+            this.hasHitCorner = true
+            this.flashCounter = this.flashCounterReset
             hitsCorner += 1
-            hitsCornerElement.innerHTML = hitsCorner;
+            hitsTotal += 1
+            dvdElement.style.filter = "brightness(0) invert(1)"
+        }
+        else if (hit[0] || hit[1])
+        {
+            this.hasHitCorner = false
+            hitsTotal += 1
+            this.color += (90 + Math.floor(Math.random()*180)) * [-1,1][Math.floor(Math.random() * 2)];
         }
 
         this.updateDisplay()
@@ -85,6 +92,27 @@ class Ball{
         */
         this.element.style.left = this.position.x - this.dimensions.x / 2 + "px";
         this.element.style.top = this.position.y - this.dimensions.y +"px";
+
+        hitsTotalElement.innerHTML = hitsTotal;
+        hitsCornerElement.innerHTML = hitsCorner;
+
+
+        if (this.hasHitCorner)
+        {
+            this.flashCounter -= 1
+            if (this.flashCounter < 1)
+            {
+                this.color += (90 + Math.floor(Math.random()*180)) * [-1,1][Math.floor(Math.random() * 2)];
+                dvdElement.style.filter ="hue-rotate("+this.color+"deg) saturate(1)"
+                this.flashCounter = this.flashConterReset
+
+            }
+        }
+        else{
+
+            dvdElement.style.filter ="hue-rotate("+this.color+"deg)"
+
+        }
     }
 
     generateNewDirection()
@@ -111,22 +139,18 @@ const statsElement = document.getElementById("stats")
 
 toggleStatsElement.addEventListener("click", ()=>{
     let state = toggleStatsElement.innerHTML
-    console.log(state)
     if (state == "Hide Stats")
     {
-        console.log("hiding")
         statsElement.style.display = "none"
         toggleStatsElement.innerHTML = "Show Stats"
 
     }
     else if ( state == "Show Stats")
     {
-        console.log("showing")
         statsElement.style.display = "block"
         toggleStatsElement.innerHTML = "Hide Stats"
 
     }
-    console.log("hey")
 })
 
 let hitsTotal = 0
@@ -145,4 +169,4 @@ const ball = new Ball(
 ball.updateDisplay()
 
 
-window.setInterval(() => ball.move(),7);
+let myInterval = window.setInterval(() => ball.move(),7);
